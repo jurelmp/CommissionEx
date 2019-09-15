@@ -6,6 +6,13 @@
 
     <persistence-unit name="commission-db" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>ph.plc.commission.model.Additional</class>
+        <class>ph.plc.commission.model.Allowance</class>
+        <class>ph.plc.commission.model.Commission</class>
+        <class>ph.plc.commission.model.Company</class>
+        <class>ph.plc.commission.model.Employee</class>
+        <class>ph.plc.commission.model.Location</class>
+        <class>ph.plc.commission.model.Rate</class>
 
         <properties>
             <property name="hibernate.current_session_context_class" value="thread"/>
