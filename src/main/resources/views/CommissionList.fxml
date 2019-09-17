@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="commissionListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.211"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.plc.commission.controller.CommissionListController">
+    <center>
+        <TableView fx:id="tableViewCommission" prefHeight="400.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colInvoice" prefWidth="100.0" text="Invoice"/>
+                <TableColumn fx:id="colTransactionDate" prefWidth="100.0" text="Date"/>
+                <TableColumn fx:id="colTruckNo" prefWidth="100.0" text="Truck No"/>
+                <TableColumn fx:id="colEmployee" prefWidth="100.0" text="Employee"/>
+                <TableColumn fx:id="colCompany" prefWidth="100.0" text="Company"/>
+                <TableColumn fx:id="colLocation" prefWidth="100.0" text="Location"/>
+                <TableColumn fx:id="colVolume" prefWidth="100.0" text="Volume"/>
+                <TableColumn fx:id="colPumping" prefWidth="100.0" text="Pumping"/>
+                <TableColumn fx:id="colSuction" prefWidth="100.0" text="Suction"/>
+                <TableColumn fx:id="colRate" prefWidth="100.0" text="Rate"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

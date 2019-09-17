@@ -73,6 +73,11 @@ public class Location implements GUIRepresentable {
     @Override
     @Transient
     public String getTitle() {
-        return null;
+        return areaProperty().get() + ", " + locationProperty().get();
+    }
+
+    @Override
+    public String toString() {
+        return getArea() + ", " + getLocation();
     }
 }

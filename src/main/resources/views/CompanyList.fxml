@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:controller="ph.plc.commission.controller.CompanyListController" fx:id="companyListPane"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.211" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <TableView fx:id="tableViewCompany" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colName" prefWidth="162.0" text="Name"/>
+                <TableColumn fx:id="colDescription" prefWidth="279.0" text="Description"/>
+            </columns>
+        </TableView>
+    </center>
+    <top>
+        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <Button fx:id="btnNewCompany" mnemonicParsing="false" text="New Company"/>
+            </items>
+        </ToolBar>
+    </top>
+</BorderPane>

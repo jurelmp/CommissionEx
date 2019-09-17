@@ -73,6 +73,11 @@ public class Company implements GUIRepresentable {
     @Override
     @Transient
     public String getTitle() {
-        return null;
+        return nameProperty().get();
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

@@ -118,4 +118,15 @@ public class Employee implements GUIRepresentable, Serializable {
     public String getTitle() {
         return codeProperty().getValue();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getFirstName()).append(" ");
+        if (getMiddleInitial() != null && getMiddleInitial().length() > 0) {
+            stringBuilder.append(getMiddleInitial()).append(". ");
+        }
+        stringBuilder.append(getLastName());
+        return stringBuilder.toString();
+    }
 }

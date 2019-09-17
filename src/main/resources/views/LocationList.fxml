@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="locationListPane" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ph.plc.commission.controller.LocationListController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <center>
+        <TableView fx:id="tableViewLocation" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colArea" prefWidth="162.0" text="Area"/>
+                <TableColumn fx:id="colLocation" prefWidth="279.0" text="Location"/>
+            </columns>
+        </TableView>
+    </center>
+    <top>
+        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <Button fx:id="btnNewLocation" mnemonicParsing="false" text="New Location"/>
+            </items>
+        </ToolBar>
+    </top>
+</BorderPane>

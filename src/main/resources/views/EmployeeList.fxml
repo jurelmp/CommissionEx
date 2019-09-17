@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="employeeListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.211"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.plc.commission.controller.EmployeeListController">
+    <center>
+        <TableView fx:id="tableViewEmployee" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colId" prefWidth="132.0" text="ID"/>
+                <TableColumn fx:id="colLastName" prefWidth="150.0" text="Last Name"/>
+                <TableColumn fx:id="colFirstName" prefWidth="150.0" text="First Name"/>
+                <TableColumn fx:id="colMiddleInitial" prefWidth="150.0" text="Middle Initial"/>
+            </columns>
+        </TableView>
+    </center>
+    <top>
+        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <Button fx:id="btnNewEmployee" mnemonicParsing="false" text="New Employee"/>
+            </items>
+        </ToolBar>
+    </top>
+</BorderPane>
