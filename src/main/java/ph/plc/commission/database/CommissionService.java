@@ -18,4 +18,8 @@ public class CommissionService {
     public List<Commission> getAll() {
         return mGenericDAO.getAll();
     }
+
+    public Commission saveOrUpdate(Commission c) {
+        return mGenericDAO.saveOrUpdate(c);
+    }
 }

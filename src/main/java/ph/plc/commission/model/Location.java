@@ -78,6 +78,6 @@ public class Location implements GUIRepresentable {
 
     @Override
     public String toString() {
-        return getArea() + ", " + getLocation();
+        return getLocation() + ", " + getArea();
     }
 }
