@@ -5,6 +5,7 @@ import ph.plc.commission.gui.GUIRepresentable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -116,6 +117,9 @@ public class Employee implements GUIRepresentable, Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
     public Set<Commission> getCommissions() {
+        if (mCommissions.get() == null) {
+            return new HashSet<>();
+        }
         return mCommissions.get();
     }
 
