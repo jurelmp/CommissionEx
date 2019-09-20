@@ -1,6 +1,5 @@
 package ph.plc.commission.controller;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,7 +7,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import org.controlsfx.control.table.TableFilter;
 import ph.plc.commission.database.CommissionService;
 import ph.plc.commission.model.Commission;
@@ -113,20 +111,5 @@ public class CommissionListController {
     }
 
     private void setupListeners() {
-        commissionListPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-            if (oldScene == null && newScene != null) {
-                // scene is set for the first time. Now its the time to listen stage changes.
-                newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
-                    if (oldWindow == null && newWindow != null) {
-                        // stage is set. now is the right time to do whatever we need to the stage in the controller.
-                        newWindow.setOnCloseRequest(event -> {
-                            Platform.exit();
-                            System.exit(0);
-                        });
-                        ((Stage) newWindow).setMaximized(true);
-                    }
-                });
-            }
-        });
     }
 }

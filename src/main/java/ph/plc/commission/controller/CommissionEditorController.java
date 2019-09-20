@@ -1,6 +1,8 @@
 package ph.plc.commission.controller;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import ph.plc.commission.database.CommissionService;
 import ph.plc.commission.database.CompanyService;
 import ph.plc.commission.database.EmployeeService;
@@ -85,6 +89,10 @@ public class CommissionEditorController {
     @Inject
     private LocationService mLocationService;
 
+    @Inject
+    private EmployeeListController mEmployeeListController;
+    private Employee mEmployeeSelected;
+
     private ObservableList<Company> mCompanyObservableList;
     private ObservableList<Employee> mEmployeeObservableList;
     private ObservableList<Location> mLocationObservableList;
@@ -102,12 +110,43 @@ public class CommissionEditorController {
         mLocationObservableList = FXCollections.observableArrayList();
         mAllowanceObservableList = FXCollections.observableArrayList();
         mAdditionalObservableList = FXCollections.observableArrayList();
+        mEmployeeSelected = mEmployeeListController.getSelectedEmployee();
         contextMenuInit();
         setupBindings();
         setupListeners();
+        if (mEmployeeSelected != null) {
+            comboBoxEmployee.getSelectionModel().select(mEmployeeSelected);
+        }
     }
 
     private void setupBindings() {
+        BooleanBinding txtDateValid = Bindings.createBooleanBinding(
+                () -> datePickerDate.getValue() != null, datePickerDate.valueProperty());
+        BooleanBinding txtVolumeValid = Bindings.createBooleanBinding(
+                () -> textFieldVolume.getText() != null && !textFieldVolume.getText().isEmpty(), textFieldVolume.textProperty());
+        BooleanBinding txtRateValid = Bindings.createBooleanBinding(
+                () -> textFieldRate.getText() != null && !textFieldRate.getText().isEmpty(), textFieldRate.textProperty());
+        BooleanBinding txtPumpingValid = Bindings.createBooleanBinding(
+                () -> textFieldPumping.getText() != null && !textFieldPumping.getText().isEmpty(), textFieldPumping.textProperty());
+        BooleanBinding txtSuctionValid = Bindings.createBooleanBinding(
+                () -> textFieldSuction.getText() != null && !textFieldSuction.getText().isEmpty(), textFieldSuction.textProperty());
+        BooleanBinding txtLocationValid = Bindings.createBooleanBinding(
+                () -> comboBoxDestination.getValue() != null, comboBoxDestination.valueProperty());
+        BooleanBinding txtCompanyValid = Bindings.createBooleanBinding(
+                () -> comboBoxCompany.getValue() != null, comboBoxCompany.valueProperty());
+        BooleanBinding txtEmployeeValid = Bindings.createBooleanBinding(
+                () -> comboBoxEmployee.getValue() != null, comboBoxEmployee.valueProperty());
+
+        btnSaveCommission.disableProperty().bind(
+                txtDateValid.not()
+                        .or(txtVolumeValid.not())
+                        .or(txtRateValid.not())
+                        .or(txtPumpingValid.not())
+                        .or(txtSuctionValid.not())
+                        .or(txtLocationValid.not())
+                        .or(txtCompanyValid.not())
+                        .or(txtEmployeeValid.not()));
+
         colAllowanceDays.setCellValueFactory(param -> param.getValue().daysProperty().asObject());
         colAllowanceRate.setCellValueFactory(param -> param.getValue().rateProperty().asObject());
         colAdditionalDesc.setCellValueFactory(param -> param.getValue().subjectProperty());
@@ -132,7 +171,21 @@ public class CommissionEditorController {
     private void setupListeners() {
         btnAddAllowance.setOnAction(event -> showAllowanceEditorDialog());
         btnAddAdditional.setOnAction(event -> showAdditionalEditorDialog());
-        btnSaveCommission.setOnAction(event -> saveCommission());
+        btnSaveCommission.setOnAction(event -> {
+            saveCommission();
+            ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+        });
+        commissionEditorPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
+            if (oldScene == null && newScene != null) {
+                // scene is set for the first time. Now its the time to listen stage changes.
+                newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+                    if (oldWindow == null && newWindow != null) {
+                        // stage is set. now is the right time to do whatever we need to the stage in the controller.
+                        ((Stage) newWindow).initModality(Modality.APPLICATION_MODAL);
+                    }
+                });
+            }
+        });
     }
 
     private void contextMenuInit() {
@@ -176,7 +229,7 @@ public class CommissionEditorController {
                 Allowance a = new Allowance();
                 a.setDays(Double.parseDouble(textFieldAllowanceDays.getText()));
                 a.setRate(Double.parseDouble(textFieldAllowanceRate.getText()));
-                a.setOperationDate(new Date());
+                a.setOperationDate(Helper.toUtilDate(datePickerDate.getValue()));
                 return a;
             }
             return null;
@@ -218,12 +271,11 @@ public class CommissionEditorController {
 
         dialog.setResultConverter(dialogButtonType -> {
             if (dialogButtonType == saveButtonType &&
-                    (!textAreaAdditionalSubject.getText().isEmpty() &&
-                            !textFieldAdditionalAmount.getText().isEmpty())) {
+                    !textFieldAdditionalAmount.getText().isEmpty()) {
                 Additional a = new Additional();
                 a.setSubject(textAreaAdditionalSubject.getText());
                 a.setAmount(Double.parseDouble(textFieldAdditionalAmount.getText()));
-                a.setOperationDate(new Date());
+                a.setOperationDate(Helper.toUtilDate(datePickerDate.getValue()));
                 return a;
             }
             return null;
@@ -249,8 +301,16 @@ public class CommissionEditorController {
 
         Employee employee = comboBoxEmployee.getValue();
         employee.getCommissions().add(commission);
-        employee.setAdditionals(new HashSet<>(mAdditionalObservableList));
-        employee.setAllowances(new HashSet<>(mAllowanceObservableList));
+
+        if (mAdditionalObservableList.size() > 0) {
+            mAdditionalObservableList.forEach(additional -> additional.setEmployee(employee));
+            employee.setAdditionals(new HashSet<>(mAdditionalObservableList));
+        }
+
+        if (mAllowanceObservableList.size() > 0) {
+            mAllowanceObservableList.forEach(allowance -> allowance.setEmployee(employee));
+            employee.setAllowances(new HashSet<>(mAllowanceObservableList));
+        }
 
         mEmployeeService.saveOrUpdate(employee);
     }

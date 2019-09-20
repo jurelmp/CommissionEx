@@ -15,7 +15,7 @@ public class GUI extends Application {
         mGuiceContext = new GuiceContext(this, () -> Collections.singletonList(new GUIConfig()));
         mGuiceContext.init();
         final WindowManager windowManager = mGuiceContext.getInstance(WindowManager.class);
-        windowManager.switchScene(WindowManager.SCENES.COMMISSION_EDITOR_SCENE);
+        windowManager.switchScene(WindowManager.SCENES.EMPLOYEE_LIST_SCENE);
     }
 
     public void run(String[] args) {

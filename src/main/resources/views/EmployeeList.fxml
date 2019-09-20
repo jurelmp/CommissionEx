@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane fx:id="employeeListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.211"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.plc.commission.controller.EmployeeListController">
+<BorderPane fx:id="employeeListPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.211" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ph.plc.commission.controller.EmployeeListController">
     <center>
         <TableView fx:id="tableViewEmployee" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>

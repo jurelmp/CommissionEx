@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <BorderPane fx:id="commissionEditorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="478.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.211"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="ph.plc.commission.controller.CommissionEditorController">
@@ -143,7 +130,8 @@
     <bottom>
         <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="43.0" prefWidth="700.0" BorderPane.alignment="CENTER">
             <items>
-                <Button fx:id="btnSaveCommission" mnemonicParsing="false" text="Save"/>
+                <Button fx:id="btnSaveCommission" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0"
+                        text="Save"/>
             </items>
         </ToolBar>
     </bottom>

@@ -98,7 +98,6 @@ public class Employee implements GUIRepresentable, Serializable {
     }
 
     public void setAdditionals(Set<Additional> additionals) {
-        additionals.forEach(additional -> additional.setEmployee(this));
         this.mAdditionals.set(additionals);
     }
 
@@ -112,7 +111,6 @@ public class Employee implements GUIRepresentable, Serializable {
     }
 
     public void setAllowances(Set<Allowance> allowances) {
-        allowances.forEach(allowance -> allowance.setEmployee(this));
         this.mAllowances.set(allowances);
     }
 

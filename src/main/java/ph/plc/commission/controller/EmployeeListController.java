@@ -9,8 +9,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.controlsfx.control.table.TableFilter;
 import ph.plc.commission.database.EmployeeService;
+import ph.plc.commission.gui.WindowManager;
 import ph.plc.commission.model.Employee;
 
 import javax.inject.Inject;
@@ -21,7 +23,7 @@ import java.util.Optional;
 public class EmployeeListController {
 
     @FXML
-    private BorderPane employeeListPane;
+    public BorderPane employeeListPane;
     @FXML
     private TableView<Employee> tableViewEmployee;
     @FXML
@@ -37,22 +39,30 @@ public class EmployeeListController {
 
     @Inject
     private EmployeeService mEmployeeService;
+    @Inject
+    private WindowManager mWindowManager;
 
     private ObservableList<Employee> mEmployeeObservableList;
     private ContextMenu mContextMenu;
     private MenuItem mMenuItemEdit;
+    private MenuItem mMenuItemAddCommission;
     private boolean isEditMode;
     private Employee mEmployee;
 
     @FXML
     private void initialize() {
         mEmployeeObservableList = FXCollections.observableArrayList();
-        mContextMenu = new ContextMenu();
-        mMenuItemEdit = new MenuItem("Edit");
-        mContextMenu.getItems().add(mMenuItemEdit);
+        contextMenuInit();
         isEditMode = false;
         setupBindings();
         setupListeners();
+    }
+
+    private void contextMenuInit() {
+        mContextMenu = new ContextMenu();
+        mMenuItemEdit = new MenuItem("Edit");
+        mMenuItemAddCommission = new MenuItem("Add Commission");
+        mContextMenu.getItems().addAll(mMenuItemEdit, mMenuItemAddCommission);
     }
 
     private void setupBindings() {
@@ -81,10 +91,32 @@ public class EmployeeListController {
             isEditMode = true;
             showEmployeeEditorDialog();
         });
+        mMenuItemAddCommission.setOnAction(event -> showCommissionEditor());
         btnNewEmployee.setOnAction(event -> {
             isEditMode = false;
             showEmployeeEditorDialog();
         });
+
+        employeeListPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
+            if (oldScene == null && newScene != null) {
+                // scene is set for the first time. Now its the time to listen stage changes.
+                newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+                    if (oldWindow == null && newWindow != null) {
+                        // stage is set. now is the right time to do whatever we need to the stage in the controller.
+                        newWindow.setOnCloseRequest(event -> {
+                            Platform.exit();
+                            System.exit(0);
+                        });
+                        ((Stage) newWindow).setMaximized(true);
+                    }
+                });
+            }
+        });
+    }
+
+    private void showCommissionEditor() {
+        mEmployee = tableViewEmployee.getSelectionModel().getSelectedItem();
+        mWindowManager.switchScene(WindowManager.SCENES.COMMISSION_EDITOR_SCENE);
     }
 
     private void showEmployeeEditorDialog() {
@@ -168,5 +200,9 @@ public class EmployeeListController {
                 mEmployeeObservableList.add(e);
             }
         });
+    }
+
+    public Employee getSelectedEmployee() {
+        return mEmployee;
     }
 }
