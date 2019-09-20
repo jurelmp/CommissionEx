@@ -16,6 +16,7 @@ public class Employee implements GUIRepresentable, Serializable {
     private final StringProperty mLastName = new SimpleStringProperty(this, "lastName");
     private final ObjectProperty<Set<Additional>> mAdditionals = new SimpleObjectProperty<>(this, "additionals");
     private final ObjectProperty<Set<Allowance>> mAllowances = new SimpleObjectProperty<>(this, "allowances");
+    private final ObjectProperty<Set<Commission>> mCommissions = new SimpleObjectProperty<>(this, "commissions");
 
     public Employee() {
     }
@@ -87,7 +88,7 @@ public class Employee implements GUIRepresentable, Serializable {
         this.mLastName.set(lastName);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
     public Set<Additional> getAdditionals() {
         return mAdditionals.get();
     }
@@ -97,10 +98,11 @@ public class Employee implements GUIRepresentable, Serializable {
     }
 
     public void setAdditionals(Set<Additional> additionals) {
+        additionals.forEach(additional -> additional.setEmployee(this));
         this.mAdditionals.set(additionals);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
     public Set<Allowance> getAllowances() {
         return mAllowances.get();
     }
@@ -110,7 +112,21 @@ public class Employee implements GUIRepresentable, Serializable {
     }
 
     public void setAllowances(Set<Allowance> allowances) {
+        allowances.forEach(allowance -> allowance.setEmployee(this));
         this.mAllowances.set(allowances);
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+    public Set<Commission> getCommissions() {
+        return mCommissions.get();
+    }
+
+    public ObjectProperty<Set<Commission>> commissionsProperty() {
+        return mCommissions;
+    }
+
+    public void setCommissions(Set<Commission> commissions) {
+        this.mCommissions.set(commissions);
     }
 
     @Override

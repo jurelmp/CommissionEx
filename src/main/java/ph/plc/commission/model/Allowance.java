@@ -86,7 +86,7 @@ public class Allowance implements GUIRepresentable {
         this.mRate.set(rate);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id", nullable = false)
     public Employee getEmployee() {
         return mEmployee.get();

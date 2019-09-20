@@ -72,7 +72,7 @@ public class Additional implements GUIRepresentable {
         this.mAmount.set(amount);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id", nullable = false)
     public Employee getEmployee() {
         return mEmployee.get();

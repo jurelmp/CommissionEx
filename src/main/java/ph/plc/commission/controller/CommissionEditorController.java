@@ -247,10 +247,11 @@ public class CommissionEditorController {
         commission.setCompany(comboBoxCompany.getValue());
         commission.setEmployee(comboBoxEmployee.getValue());
 
-        commission = mCommissionService.saveOrUpdate(commission);
-        Employee employee = commission.getEmployee();
+        Employee employee = comboBoxEmployee.getValue();
+        employee.getCommissions().add(commission);
         employee.setAdditionals(new HashSet<>(mAdditionalObservableList));
         employee.setAllowances(new HashSet<>(mAllowanceObservableList));
+
         mEmployeeService.saveOrUpdate(employee);
     }
 }
