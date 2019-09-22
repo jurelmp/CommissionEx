@@ -36,6 +36,16 @@ public class EmployeeListController {
     private TableColumn<Employee, String> colMiddleInitial;
     @FXML
     private Button btnNewEmployee;
+    @FXML
+    private Button btnLocationList;
+    @FXML
+    private Button btnCompanyList;
+    @FXML
+    private Button btnEditEmployee;
+    @FXML
+    private Button btnViewCommissions;
+    @FXML
+    private Button btnAddCommission;
 
     @Inject
     private EmployeeService mEmployeeService;
@@ -46,12 +56,14 @@ public class EmployeeListController {
     private ContextMenu mContextMenu;
     private MenuItem mMenuItemEdit;
     private MenuItem mMenuItemAddCommission;
+    private MenuItem mMenuItemCommissionList;
     private boolean isEditMode;
     private Employee mEmployee;
 
     @FXML
     private void initialize() {
         mEmployeeObservableList = FXCollections.observableArrayList();
+        btnAddCommission.setVisible(false);
         contextMenuInit();
         isEditMode = false;
         setupBindings();
@@ -61,8 +73,9 @@ public class EmployeeListController {
     private void contextMenuInit() {
         mContextMenu = new ContextMenu();
         mMenuItemEdit = new MenuItem("Edit");
+        mMenuItemCommissionList = new MenuItem("View Commissions");
         mMenuItemAddCommission = new MenuItem("Add Commission");
-        mContextMenu.getItems().addAll(mMenuItemEdit, mMenuItemAddCommission);
+        mContextMenu.getItems().addAll(mMenuItemEdit, mMenuItemAddCommission, mMenuItemCommissionList);
     }
 
     private void setupBindings() {
@@ -92,10 +105,19 @@ public class EmployeeListController {
             showEmployeeEditorDialog();
         });
         mMenuItemAddCommission.setOnAction(event -> showCommissionEditor());
+        mMenuItemCommissionList.setOnAction(event -> showCommissionList());
         btnNewEmployee.setOnAction(event -> {
             isEditMode = false;
             showEmployeeEditorDialog();
         });
+        btnEditEmployee.setOnAction(event -> {
+            isEditMode = true;
+            showEmployeeEditorDialog();
+        });
+        btnAddCommission.setOnAction(event -> showCommissionEditor());
+        btnViewCommissions.setOnAction(event -> showCommissionList());
+        btnLocationList.setOnAction(event -> mWindowManager.switchScene(WindowManager.SCENES.LOCATION_LIST_SCENE));
+        btnCompanyList.setOnAction(event -> mWindowManager.switchScene(WindowManager.SCENES.COMPANY_LIST_SCENE));
 
         employeeListPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
             if (oldScene == null && newScene != null) {
@@ -112,6 +134,17 @@ public class EmployeeListController {
                 });
             }
         });
+        btnEditEmployee.disableProperty()
+                .bind(Bindings.isEmpty(tableViewEmployee.getSelectionModel().getSelectedItems()));
+        btnAddCommission.disableProperty()
+                .bind(Bindings.isEmpty(tableViewEmployee.getSelectionModel().getSelectedItems()));
+        btnViewCommissions.disableProperty()
+                .bind(Bindings.isEmpty(tableViewEmployee.getSelectionModel().getSelectedItems()));
+    }
+
+    private void showCommissionList() {
+        mEmployee = tableViewEmployee.getSelectionModel().getSelectedItem();
+        mWindowManager.switchScene(WindowManager.SCENES.COMMISSION_LIST_SCENE);
     }
 
     private void showCommissionEditor() {

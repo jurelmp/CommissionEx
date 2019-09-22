@@ -11,9 +11,9 @@
                 <TableColumn fx:id="colInvoice" prefWidth="100.0" text="Invoice"/>
                 <TableColumn fx:id="colTransactionDate" prefWidth="100.0" text="Date"/>
                 <TableColumn fx:id="colTruckNo" prefWidth="100.0" text="Truck No"/>
-                <TableColumn fx:id="colEmployee" prefWidth="100.0" text="Employee"/>
-                <TableColumn fx:id="colCompany" prefWidth="100.0" text="Company"/>
-                <TableColumn fx:id="colLocation" prefWidth="100.0" text="Location"/>
+                <TableColumn fx:id="colEmployee" prefWidth="150.0" text="Employee"/>
+                <TableColumn fx:id="colCompany" prefWidth="150.0" text="Company"/>
+                <TableColumn fx:id="colLocation" prefWidth="150.0" text="Location"/>
                 <TableColumn fx:id="colVolume" prefWidth="100.0" text="Volume"/>
                 <TableColumn fx:id="colPumping" prefWidth="100.0" text="Pumping"/>
                 <TableColumn fx:id="colSuction" prefWidth="100.0" text="Suction"/>
@@ -21,4 +21,11 @@
             </columns>
         </TableView>
     </center>
+    <top>
+        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <Button fx:id="btnAddCommission" mnemonicParsing="false" text="Add Commission"/>
+            </items>
+        </ToolBar>
+    </top>
 </BorderPane>

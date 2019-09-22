@@ -89,7 +89,7 @@ public class Employee implements GUIRepresentable, Serializable {
         this.mLastName.set(lastName);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Additional> getAdditionals() {
         return mAdditionals.get();
     }
@@ -102,7 +102,7 @@ public class Employee implements GUIRepresentable, Serializable {
         this.mAdditionals.set(additionals);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Allowance> getAllowances() {
         return mAllowances.get();
     }
@@ -115,7 +115,7 @@ public class Employee implements GUIRepresentable, Serializable {
         this.mAllowances.set(allowances);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Commission> getCommissions() {
         if (mCommissions.get() == null) {
             return new HashSet<>();

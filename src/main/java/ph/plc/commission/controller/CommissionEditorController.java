@@ -91,6 +91,8 @@ public class CommissionEditorController {
 
     @Inject
     private EmployeeListController mEmployeeListController;
+    @Inject
+    private CommissionListController mCommissionListController;
     private Employee mEmployeeSelected;
 
     private ObservableList<Company> mCompanyObservableList;
@@ -166,6 +168,7 @@ public class CommissionEditorController {
         textFieldVolume.setTextFormatter(Helper.generateIntegerTextFormatter());
         textFieldPumping.setTextFormatter(Helper.generateIntegerTextFormatter());
         textFieldSuction.setTextFormatter(Helper.generateIntegerTextFormatter());
+        comboBoxEmployee.setDisable(true);
     }
 
     private void setupListeners() {
@@ -181,7 +184,9 @@ public class CommissionEditorController {
                 newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
                     if (oldWindow == null && newWindow != null) {
                         // stage is set. now is the right time to do whatever we need to the stage in the controller.
-                        ((Stage) newWindow).initModality(Modality.APPLICATION_MODAL);
+                        Stage s = ((Stage) newWindow);
+                        s.initModality(Modality.APPLICATION_MODAL);
+                        s.setResizable(false);
                     }
                 });
             }
@@ -313,5 +318,6 @@ public class CommissionEditorController {
         }
 
         mEmployeeService.saveOrUpdate(employee);
+        mCommissionListController.refreshList();
     }
 }

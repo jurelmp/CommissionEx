@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane fx:id="employeeListPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+<BorderPane fx:id="employeeListPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="668.0"
             xmlns="http://javafx.com/javafx/8.0.211" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ph.plc.commission.controller.EmployeeListController">
     <center>
@@ -19,6 +19,13 @@
         <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
                 <Button fx:id="btnNewEmployee" mnemonicParsing="false" text="New Employee"/>
+                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0"/>
+                <Button fx:id="btnLocationList" mnemonicParsing="false" text="Locations"/>
+                <Button fx:id="btnCompanyList" layoutX="130.0" layoutY="13.0" mnemonicParsing="false" text="Companies"/>
+                <Separator layoutX="109.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0"/>
+                <Button fx:id="btnEditEmployee" mnemonicParsing="false" text="Edit Employee"/>
+                <Button fx:id="btnViewCommissions" layoutX="302.0" layoutY="13.0" mnemonicParsing="false" text="View Commissions"/>
+                <Button fx:id="btnAddCommission" layoutX="358.0" layoutY="13.0" mnemonicParsing="false" text="Add Commission"/>
             </items>
         </ToolBar>
     </top>
