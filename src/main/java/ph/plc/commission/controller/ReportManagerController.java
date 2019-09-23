@@ -48,7 +48,7 @@ public class ReportManagerController {
                 newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
                     if (oldWindow == null && newWindow != null) {
                         Stage stage = ((Stage) newWindow);
-                        stage.getIcons().add(new Image("/images/cost.png"));
+                        stage.getIcons().add(Helper.getImageIcon());
                         stage.setTitle("Report Manager");
                         stage.setWidth(350.0);
                         stage.setHeight(235.0);

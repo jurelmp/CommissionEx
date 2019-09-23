@@ -9,9 +9,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.controlsfx.control.table.TableFilter;
 import ph.plc.commission.database.LocationService;
 import ph.plc.commission.model.Location;
+import ph.plc.commission.util.Helper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -79,12 +81,25 @@ public class LocationListController {
             isEditMode = false;
             showLocationEditorDialog();
         });
+        locationListPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
+            if (oldScene == null && newScene != null) {
+                // scene is set for the first time. Now its the time to listen stage changes.
+                newScene.windowProperty().addListener((observableWindow, oldWindow, newWindow) -> {
+                    if (oldWindow == null && newWindow != null) {
+                        // stage is set. now is the right time to do whatever we need to the stage in the controller.
+                        Stage s = ((Stage) newWindow);
+                        s.getIcons().add(Helper.getImageIcon());
+                    }
+                });
+            }
+        });
     }
 
     private void showLocationEditorDialog() {
         Dialog<Location> dialog = new Dialog<>();
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(Helper.getImageIcon());
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);

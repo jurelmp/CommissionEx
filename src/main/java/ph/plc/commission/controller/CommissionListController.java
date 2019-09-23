@@ -16,6 +16,7 @@ import ph.plc.commission.model.Commission;
 import ph.plc.commission.model.Company;
 import ph.plc.commission.model.Employee;
 import ph.plc.commission.model.Location;
+import ph.plc.commission.util.Helper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -149,6 +150,7 @@ public class CommissionListController {
                         // stage is set. now is the right time to do whatever we need to the stage in the controller.
                         Stage s = ((Stage) newWindow);
                         s.initModality(Modality.APPLICATION_MODAL);
+                        s.getIcons().add(Helper.getImageIcon());
                     }
                 });
             }

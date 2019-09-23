@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -15,6 +14,7 @@ import org.controlsfx.control.table.TableFilter;
 import ph.plc.commission.database.EmployeeService;
 import ph.plc.commission.gui.WindowManager;
 import ph.plc.commission.model.Employee;
+import ph.plc.commission.util.Helper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -134,7 +134,7 @@ public class EmployeeListController {
                         });
                         Stage s = ((Stage) newWindow);
                         s.setMaximized(true);
-                        s.getIcons().add(new Image("/images/cost.png"));
+                        s.getIcons().add(Helper.getImageIcon());
                     }
                 });
             }
@@ -166,6 +166,7 @@ public class EmployeeListController {
         Dialog<Employee> dialog = new Dialog<>();
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(Helper.getImageIcon());
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);

@@ -3,6 +3,7 @@ package ph.plc.commission.util;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -97,5 +98,9 @@ public class Helper {
             }
         };
         return new TextFormatter<>(converter, 0, filter);
+    }
+
+    public static Image getImageIcon() {
+        return new Image("/images/cost.png");
     }
 }

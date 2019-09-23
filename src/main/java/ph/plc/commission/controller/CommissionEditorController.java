@@ -187,6 +187,7 @@ public class CommissionEditorController {
                         Stage s = ((Stage) newWindow);
                         s.initModality(Modality.APPLICATION_MODAL);
                         s.setResizable(false);
+                        s.getIcons().add(Helper.getImageIcon());
                     }
                 });
             }
@@ -202,6 +203,7 @@ public class CommissionEditorController {
         Dialog<Allowance> dialog = new Dialog<>();
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(Helper.getImageIcon());
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
@@ -249,6 +251,7 @@ public class CommissionEditorController {
         Dialog<Additional> dialog = new Dialog<>();
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(Helper.getImageIcon());
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
