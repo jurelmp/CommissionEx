@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" whenNoDataType="AllSectionsNoDetail"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="DeliveryCharges" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="bd12cc45-a54f-444d-85f7-d40f4b8b8d88">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="CommissionDataAdapter.xml"/>
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <parameter name="PERIOD_FROM" class="java.util.Date"/>
+    <parameter name="PERIOD_TO" class="java.util.Date"/>
+    <queryString>
+        <![CDATA[SELECT L.AREA,
+       COMM.TRUCK_NO,
+       COMM.INVOICE,
+       COMM.VOLUME,
+       COMM.RATE
+FROM COMMISSION COMM
+         JOIN LOCATION L on COMM.LOCATION_ID = L.ID
+         JOIN COMPANY COMP on COMM.COMPANY_ID = COMP.ID
+WHERE COMM.TRANSACTION_DATE BETWEEN $P{PERIOD_FROM} AND $P{PERIOD_TO}
+ORDER BY L.AREA, COMM.TRUCK_NO]]>
+    </queryString>
+    <field name="AREA" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="AREA"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="LOCATION"/>
+    </field>
+    <field name="TRUCK_NO" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="TRUCK_NO"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="INVOICE" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="INVOICE"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="VOLUME" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="VOLUME"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="RATE" class="java.lang.Double">
+        <property name="com.jaspersoft.studio.field.label" value="RATE"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <variable name="HAULING_AMOUNT" class="java.lang.Double">
+        <variableExpression><![CDATA[($F{VOLUME} * 1000) * $F{RATE}]]></variableExpression>
+    </variable>
+    <variable name="SUBTOTAL_AMOUNT_BY_TRUCK_NO" class="java.lang.Double" resetType="Group"
+              resetGroup="GROUP_BY_TRUCK_NO" calculation="Sum">
+        <variableExpression><![CDATA[$V{HAULING_AMOUNT}]]></variableExpression>
+    </variable>
+    <variable name="SUBTOTAL_VOL_BY_TRUCK_NO" class="java.lang.Integer" resetType="Group" resetGroup="GROUP_BY_TRUCK_NO"
+              calculation="Sum">
+        <variableExpression><![CDATA[$F{VOLUME}]]></variableExpression>
+    </variable>
+    <variable name="SUBTOTAL_AMOUNT_BY_LOCATION" class="java.lang.Double" resetType="Group" resetGroup="GROUP_BY_AREA"
+              calculation="Sum">
+        <variableExpression><![CDATA[$V{HAULING_AMOUNT}]]></variableExpression>
+    </variable>
+    <variable name="GRAND_TOTAL_AMOUNT" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$V{HAULING_AMOUNT}]]></variableExpression>
+    </variable>
+    <group name="GROUP_BY_AREA">
+        <groupExpression><![CDATA[$F{AREA}]]></groupExpression>
+        <groupHeader>
+            <band height="19">
+                <textField>
+                    <reportElement x="11" y="0" width="250" height="19" uuid="90e2b0bb-c178-4d8d-852e-7df6dcfaa9fb"/>
+                    <textElement>
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Location: " + $F{AREA}]]></textFieldExpression>
+                </textField>
+                <textField evaluationTime="Group" evaluationGroup="GROUP_BY_AREA" pattern="#,##0.00#;(#,##0.00#)">
+                    <reportElement x="451" y="-1" width="100" height="20" uuid="cfc3b04f-e97f-432c-a393-a001e275ef60"/>
+                    <textElement textAlignment="Right">
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{SUBTOTAL_AMOUNT_BY_LOCATION}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+    </group>
+    <group name="GROUP_BY_TRUCK_NO">
+        <groupExpression><![CDATA[$F{TRUCK_NO}]]></groupExpression>
+        <groupFooter>
+            <band height="23">
+                <textField pattern="#,##0.00#;(#,##0.00#)">
+                    <reportElement x="451" y="2" width="100" height="20" uuid="9f3b8f5f-9ad5-4d27-9fe0-7accccbda999"/>
+                    <textElement textAlignment="Right">
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{SUBTOTAL_AMOUNT_BY_TRUCK_NO}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="231" y="2" width="100" height="20" uuid="07eb5d8d-3d71-4887-a614-e0d2775117b3"/>
+                    <textElement textAlignment="Right">
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{SUBTOTAL_VOL_BY_TRUCK_NO}]]></textFieldExpression>
+                </textField>
+                <staticText>
+                    <reportElement x="121" y="2" width="100" height="19" uuid="8626685d-a8e4-42ca-ba77-d83c1c6a18c1">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                                  value="5574887d-1e39-49de-b72e-c32c7ceac069"/>
+                    </reportElement>
+                    <textElement>
+                        <font isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Subtotal]]></text>
+                </staticText>
+                <line>
+                    <reportElement x="121" y="1" width="430" height="1" uuid="eb41095e-100b-471d-835c-12c2e350a457"/>
+                    <graphicElement>
+                        <pen lineColor="#A8A8A8"/>
+                    </graphicElement>
+                </line>
+                <line>
+                    <reportElement x="11" y="22" width="540" height="1" uuid="8fcd65db-a810-48a8-be42-3600605e9c33"/>
+                    <graphicElement>
+                        <pen lineColor="#A8A8A8"/>
+                    </graphicElement>
+                </line>
+            </band>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="60" splitType="Stretch">
+            <staticText>
+                <reportElement x="138" y="10" width="279" height="20" uuid="300183f3-fb52-4107-8574-4fb03b2c6f0e"/>
+                <textElement textAlignment="Center">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Delivery Charges]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="138" y="30" width="279" height="17" uuid="61c1e556-c90d-4dec-a521-3339997de71d"/>
+                <textElement textAlignment="Center">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA["Covering Period: " + new SimpleDateFormat("MM/dd/yyyy").format($P{PERIOD_FROM}) + " - " + new SimpleDateFormat("MM/dd/yyyy").format($P{PERIOD_TO})]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement x="11" y="0" width="100" height="19" uuid="8a922502-a37a-4908-9d08-f86e5ce1b64d">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="c1df4704-955a-4c29-aaec-9d4e4ad2aac6"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Truck No.]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="121" y="0" width="100" height="19" uuid="09a357fa-1a54-450c-8e19-f59f9ef76ed4">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="5574887d-1e39-49de-b72e-c32c7ceac069"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Invoice]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="231" y="0" width="100" height="19" uuid="31eb7ac6-28c7-4483-97c5-5953148ee00a">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="c1e493f2-7131-4724-a9bc-26121d9cf860"/>
+                </reportElement>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Volume (K/L)]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="341" y="0" width="100" height="19" uuid="0e7affaf-c234-4112-a008-dc744546d225">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
+                </reportElement>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Rate]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="451" y="0" width="100" height="19" uuid="65f1161f-5fb5-48d5-8c32-462c2fc5a261">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
+                </reportElement>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Amount]]></text>
+            </staticText>
+            <line>
+                <reportElement x="11" y="19" width="540" height="1" uuid="76bb8711-d5b9-4fee-ac60-1011684fda4c"/>
+            </line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="19" splitType="Stretch">
+            <textField>
+                <reportElement isPrintRepeatedValues="false" x="11" y="4" width="100" height="15"
+                               isPrintInFirstWholeBand="true" uuid="cc1d0936-345c-42d8-93ca-f95ae83f7e32">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="c1df4704-955a-4c29-aaec-9d4e4ad2aac6"/>
+                </reportElement>
+                <textFieldExpression><![CDATA[$F{TRUCK_NO}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="121" y="4" width="100" height="15" uuid="9ad66576-516a-4f2a-aaaf-bc46be742bbc">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="5574887d-1e39-49de-b72e-c32c7ceac069"/>
+                </reportElement>
+                <textFieldExpression><![CDATA[$F{INVOICE}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="231" y="4" width="100" height="15" uuid="f648914f-e0de-4556-acf1-fde13b453d05">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="c1e493f2-7131-4724-a9bc-26121d9cf860"/>
+                </reportElement>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{VOLUME}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="341" y="4" width="100" height="15" uuid="2d66d04f-0419-48e4-b099-2e561dee9747">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
+                </reportElement>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{RATE}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00#;(#,##0.00#)">
+                <reportElement x="451" y="4" width="100" height="15" uuid="4232947a-1360-46db-a915-f3762fd2372f">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
+                </reportElement>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$V{HAULING_AMOUNT}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="48">
+            <textField>
+                <reportElement x="180" y="9" width="100" height="30" uuid="cfe0278f-ce13-47cf-b918-b2a525e77e2f"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="280" y="9" width="100" height="30" uuid="4a060ba4-6b7a-4193-b209-286cc0002c93"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="42" splitType="Stretch">
+            <textField pattern="#,##0.00#;(#,##0.00#)">
+                <reportElement x="451" y="11" width="100" height="20" uuid="2498d3a3-e2a5-4f36-8f7f-90643d6a9f54">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{GRAND_TOTAL_AMOUNT}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="11" y="11" width="100" height="19" uuid="fd4e1538-2a16-47ff-ab61-026d1acc3e25">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="c1df4704-955a-4c29-aaec-9d4e4ad2aac6"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[GRAND TOTAL]]></text>
+            </staticText>
+        </band>
+    </summary>
+</jasperReport>

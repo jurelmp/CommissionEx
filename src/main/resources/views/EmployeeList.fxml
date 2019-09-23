@@ -24,8 +24,13 @@
                 <Button fx:id="btnCompanyList" layoutX="130.0" layoutY="13.0" mnemonicParsing="false" text="Companies"/>
                 <Separator layoutX="109.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0"/>
                 <Button fx:id="btnEditEmployee" mnemonicParsing="false" text="Edit Employee"/>
-                <Button fx:id="btnViewCommissions" layoutX="302.0" layoutY="13.0" mnemonicParsing="false" text="View Commissions"/>
-                <Button fx:id="btnAddCommission" layoutX="358.0" layoutY="13.0" mnemonicParsing="false" text="Add Commission"/>
+                <Button fx:id="btnViewCommissions" layoutX="302.0" layoutY="13.0" mnemonicParsing="false"
+                        text="View Commissions"/>
+                <Button fx:id="btnAddCommission" layoutX="358.0" layoutY="13.0" mnemonicParsing="false"
+                        text="Add Commission"/>
+                <Separator layoutX="281.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0"/>
+                <Button fx:id="btnReports" layoutX="517.0" layoutY="13.0" mnemonicParsing="false"
+                        text="Reports"/>
             </items>
         </ToolBar>
     </top>

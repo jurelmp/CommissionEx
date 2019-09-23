@@ -18,7 +18,8 @@ public class WindowManager {
         COMMISSION_LIST_SCENE("/views/CommissionList.fxml"),
         COMPANY_LIST_SCENE("/views/CompanyList.fxml"),
         LOCATION_LIST_SCENE("/views/LocationList.fxml"),
-        COMMISSION_EDITOR_SCENE("/views/CommissionEditor.fxml");
+        COMMISSION_EDITOR_SCENE("/views/CommissionEditor.fxml"),
+        REPORT_MANAGER_SCENE("/views/ReportManager.fxml");
 
         private String sceneName;
 

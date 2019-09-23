@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" whenNoDataType="AllSectionsNoDetail"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="HaulingIncomeReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20"
+              rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd945225-5d6e-4357-87b8-8f79a8979ef9">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="CommissionDataAdapter.xml"/>
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="285"/>
+    <property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="701"/>
+    <parameter name="PERIOD_FROM" class="java.util.Date"/>
+    <parameter name="PERIOD_TO" class="java.util.Date"/>
+    <queryString>
+        <![CDATA[SELECT COMM.TRANSACTION_DATE,
+       COMM.VOLUME,
+       COMM.RATE,
+       COMM.TRUCK_NO,
+       COMP.NAME COMPANY,
+       L.LOCATION,
+       L.AREA
+FROM COMMISSION COMM
+         JOIN LOCATION L on COMM.LOCATION_ID = L.ID
+         JOIN COMPANY COMP on COMM.COMPANY_ID = COMP.ID
+WHERE COMM.TRANSACTION_DATE BETWEEN $P{PERIOD_FROM} AND $P{PERIOD_TO}
+ORDER BY L.AREA, COMM.TRUCK_NO]]>
+    </queryString>
+    <field name="TRANSACTION_DATE" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="TRANSACTION_DATE"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="VOLUME" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="VOLUME"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="RATE" class="java.lang.Double">
+        <property name="com.jaspersoft.studio.field.label" value="RATE"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="TRUCK_NO" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="TRUCK_NO"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMMISSION"/>
+    </field>
+    <field name="COMPANY" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="COMPANY"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="COMPANY"/>
+    </field>
+    <field name="LOCATION" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="LOCATION"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="LOCATION"/>
+    </field>
+    <field name="AREA" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="AREA"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="LOCATION"/>
+    </field>
+    <variable name="HAULING" class="java.lang.Double">
+        <variableExpression><![CDATA[($F{VOLUME} * 1000) * $F{RATE}]]></variableExpression>
+    </variable>
+    <variable name="GROSS_HAULING" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$V{HAULING}]]></variableExpression>
+    </variable>
+    <variable name="GROSS_HAULING_BY_COMPANY" class="java.lang.Double" resetType="Group" resetGroup="GROUP_BY_COMPANY"
+              calculation="Sum">
+        <variableExpression><![CDATA[$V{HAULING}]]></variableExpression>
+    </variable>
+    <variable name="GROSS_HAULING_BY_AREA" class="java.lang.Double" resetType="Group" resetGroup="GROUP_BY_AREA"
+              calculation="Sum">
+        <variableExpression><![CDATA[$V{HAULING}]]></variableExpression>
+    </variable>
+    <group name="GROUP_BY_AREA">
+        <groupExpression><![CDATA[$F{AREA}]]></groupExpression>
+        <groupFooter>
+            <band height="23">
+                <textField pattern="#,##0.00#;(#,##0.00#)">
+                    <reportElement x="395" y="3" width="100" height="20" uuid="f0169985-5257-4d4d-87c1-dc2e90b2b9c8"/>
+                    <textElement textAlignment="Right">
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{GROSS_HAULING_BY_AREA}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="65" y="4" width="100" height="19" uuid="8cdf138c-29a3-4779-856c-6b7054957ce2">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                                  value="7862d761-5af8-4332-b3bf-6a129583ea56"/>
+                    </reportElement>
+                    <textElement>
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{AREA} + " Subtotal"]]></textFieldExpression>
+                </textField>
+                <line>
+                    <reportElement x="65" y="0" width="430" height="1" uuid="ce108c0c-7d67-4532-bef6-95912b7104ce"/>
+                </line>
+            </band>
+        </groupFooter>
+    </group>
+    <group name="GROUP_BY_COMPANY">
+        <groupExpression><![CDATA[$F{COMPANY}]]></groupExpression>
+        <groupFooter>
+            <band height="26">
+                <textField pattern="#,##0.00#;(#,##0.00#)">
+                    <reportElement x="395" y="6" width="100" height="20" uuid="db3ce36e-0de5-4a11-82c4-e4b8533e9c85"/>
+                    <textElement textAlignment="Right">
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$V{GROSS_HAULING_BY_COMPANY}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="65" y="6" width="100" height="20" uuid="399a1d12-63ce-4a42-89ab-7c8896c15b14">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                                  value="6eb36d44-72e6-4816-8917-ebc2e53358ec"/>
+                    </reportElement>
+                    <textElement>
+                        <font isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{COMPANY} + " Subtotal"]]></textFieldExpression>
+                </textField>
+                <line>
+                    <reportElement x="65" y="0" width="430" height="1" uuid="3413a2ff-a042-4b87-b1b3-f39260a8f23a"/>
+                </line>
+            </band>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="79" splitType="Stretch">
+            <staticText>
+                <reportElement x="138" y="13" width="279" height="37" uuid="90773a74-3d27-45f9-adb8-4a8e92d2c3fb"/>
+                <textElement textAlignment="Center">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Petrologistics Corporation
+Hauling Income Report]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="138" y="50" width="279" height="17" uuid="dbee8933-d52a-4511-bb9c-92ac71d01bfc"/>
+                <textElement textAlignment="Center">
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA["Covering Period: " + new SimpleDateFormat("MM/dd/yyyy").format($P{PERIOD_FROM}) + " - " + new SimpleDateFormat("MM/dd/yyyy").format($P{PERIOD_TO})]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="21" splitType="Stretch">
+            <staticText>
+                <reportElement x="65" y="0" width="100" height="20" uuid="872e7367-5624-42fe-a66a-7fbef8c88709">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="7862d761-5af8-4332-b3bf-6a129583ea56"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Area]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="175" y="0" width="100" height="20" uuid="e83da6cf-df07-4677-8409-884a0662dfa3">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="6eb36d44-72e6-4816-8917-ebc2e53358ec"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Company]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="285" y="0" width="100" height="20" uuid="0906af96-0b30-4d6a-8541-8d7daac6fb28">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="9f683b27-b3e6-49a2-a0d2-c61744f44fee"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Truck No.]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="395" y="0" width="100" height="20" uuid="2ea9958c-c5fb-4939-ad9b-85dd82cc35ce">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="9f683b27-b3e6-49a2-a0d2-c61744f44fee"/>
+                </reportElement>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Hauling]]></text>
+            </staticText>
+            <line>
+                <reportElement x="65" y="14" width="430" height="1" uuid="8a98ee04-78e4-4a9c-9921-5d6adb48c2dd"/>
+            </line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="18" splitType="Stretch">
+            <textField>
+                <reportElement isPrintRepeatedValues="false" x="285" y="-1" width="100" height="18"
+                               isPrintInFirstWholeBand="true" uuid="577048e8-aecc-43f3-b5b6-3dc1b02a61f3">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="9f683b27-b3e6-49a2-a0d2-c61744f44fee"/>
+                </reportElement>
+                <textFieldExpression><![CDATA[$F{TRUCK_NO}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00#;(#,##0.00#)">
+                <reportElement x="395" y="-1" width="100" height="18" uuid="c4fd7e6d-e845-4fe6-8a1b-0c9eae55dae2"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$V{HAULING}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement isPrintRepeatedValues="false" x="175" y="-1" width="100" height="18"
+                               isPrintInFirstWholeBand="true" uuid="5e9b146e-e48e-4c63-9d26-b529d6f8762e">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="6eb36d44-72e6-4816-8917-ebc2e53358ec"/>
+                </reportElement>
+                <textFieldExpression><![CDATA[$F{COMPANY}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement isPrintRepeatedValues="false" x="65" y="-1" width="100" height="18"
+                               isPrintInFirstWholeBand="true" uuid="35c6e770-666d-4436-99fc-a71b0e6d5f5c">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="6eb36d44-72e6-4816-8917-ebc2e53358ec"/>
+                </reportElement>
+                <textFieldExpression><![CDATA[$F{AREA}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <summary>
+        <band height="22" splitType="Stretch">
+            <line>
+                <reportElement x="65" y="0" width="430" height="1" uuid="54abc4f2-cf3d-4d89-aa6d-cd889776271a"/>
+            </line>
+            <textField pattern="#,##0.00#;(#,##0.00#)">
+                <reportElement x="395" y="2" width="100" height="20" uuid="a118e50a-18f7-411d-a8cb-329ff38f0fb9"/>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{GROSS_HAULING}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="65" y="2" width="100" height="20" uuid="463d8c77-0b51-473a-b022-d9b759868950">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="7862d761-5af8-4332-b3bf-6a129583ea56"/>
+                </reportElement>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Grand Total]]></text>
+            </staticText>
+        </band>
+    </summary>
+</jasperReport>

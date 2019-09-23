@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -46,6 +47,8 @@ public class EmployeeListController {
     private Button btnViewCommissions;
     @FXML
     private Button btnAddCommission;
+    @FXML
+    private Button btnReports;
 
     @Inject
     private EmployeeService mEmployeeService;
@@ -129,7 +132,9 @@ public class EmployeeListController {
                             Platform.exit();
                             System.exit(0);
                         });
-                        ((Stage) newWindow).setMaximized(true);
+                        Stage s = ((Stage) newWindow);
+                        s.setMaximized(true);
+                        s.getIcons().add(new Image("/images/cost.png"));
                     }
                 });
             }
@@ -140,6 +145,11 @@ public class EmployeeListController {
                 .bind(Bindings.isEmpty(tableViewEmployee.getSelectionModel().getSelectedItems()));
         btnViewCommissions.disableProperty()
                 .bind(Bindings.isEmpty(tableViewEmployee.getSelectionModel().getSelectedItems()));
+        btnReports.setOnAction(event -> showReportManager());
+    }
+
+    private void showReportManager() {
+        mWindowManager.switchScene(WindowManager.SCENES.REPORT_MANAGER_SCENE);
     }
 
     private void showCommissionList() {
