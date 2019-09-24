@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" whenNoDataType="AllSectionsNoDetail"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="DeliveryCharges" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
-              topMargin="20" bottomMargin="20" uuid="bd12cc45-a54f-444d-85f7-d40f4b8b8d88">
+              name="DeliveryCharges" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail"
+              columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              uuid="bd12cc45-a54f-444d-85f7-d40f4b8b8d88">
     <property name="com.jaspersoft.studio.data.defaultdataadapter" value="CommissionDataAdapter.xml"/>
     <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.unit." value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+    <property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
     <parameter name="PERIOD_FROM" class="java.util.Date"/>
     <parameter name="PERIOD_TO" class="java.util.Date"/>
     <queryString>
@@ -62,16 +72,21 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
     <group name="GROUP_BY_AREA">
         <groupExpression><![CDATA[$F{AREA}]]></groupExpression>
         <groupHeader>
-            <band height="19">
+            <band height="15">
                 <textField>
-                    <reportElement x="11" y="0" width="250" height="19" uuid="90e2b0bb-c178-4d8d-852e-7df6dcfaa9fb"/>
+                    <reportElement x="11" y="0" width="250" height="15" uuid="90e2b0bb-c178-4d8d-852e-7df6dcfaa9fb">
+                        <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                    </reportElement>
                     <textElement>
                         <font isBold="true"/>
                     </textElement>
                     <textFieldExpression><![CDATA["Location: " + $F{AREA}]]></textFieldExpression>
                 </textField>
-                <textField evaluationTime="Group" evaluationGroup="GROUP_BY_AREA" pattern="#,##0.00#;(#,##0.00#)">
-                    <reportElement x="451" y="-1" width="100" height="20" uuid="cfc3b04f-e97f-432c-a393-a001e275ef60"/>
+                <textField evaluationTime="Group" evaluationGroup="GROUP_BY_AREA" pattern="#,##0.00#;(#,##0.00#)"
+                           isBlankWhenNull="true">
+                    <reportElement x="451" y="-1" width="100" height="15" uuid="cfc3b04f-e97f-432c-a393-a001e275ef60">
+                        <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                    </reportElement>
                     <textElement textAlignment="Right">
                         <font isBold="true"/>
                     </textElement>
@@ -84,14 +99,14 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
         <groupExpression><![CDATA[$F{TRUCK_NO}]]></groupExpression>
         <groupFooter>
             <band height="23">
-                <textField pattern="#,##0.00#;(#,##0.00#)">
+                <textField pattern="#,##0.00#;(#,##0.00#)" isBlankWhenNull="true">
                     <reportElement x="451" y="2" width="100" height="20" uuid="9f3b8f5f-9ad5-4d27-9fe0-7accccbda999"/>
                     <textElement textAlignment="Right">
                         <font isBold="true"/>
                     </textElement>
                     <textFieldExpression><![CDATA[$V{SUBTOTAL_AMOUNT_BY_TRUCK_NO}]]></textFieldExpression>
                 </textField>
-                <textField>
+                <textField isBlankWhenNull="true">
                     <reportElement x="231" y="2" width="100" height="20" uuid="07eb5d8d-3d71-4887-a614-e0d2775117b3"/>
                     <textElement textAlignment="Right">
                         <font isBold="true"/>
@@ -127,16 +142,18 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
         <band splitType="Stretch"/>
     </background>
     <title>
-        <band height="60" splitType="Stretch">
+        <band height="52" splitType="Stretch">
             <staticText>
-                <reportElement x="138" y="10" width="279" height="20" uuid="300183f3-fb52-4107-8574-4fb03b2c6f0e"/>
+                <reportElement x="138" y="10" width="279" height="16" uuid="300183f3-fb52-4107-8574-4fb03b2c6f0e">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
                 <textElement textAlignment="Center">
                     <font size="12" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Delivery Charges]]></text>
             </staticText>
             <textField>
-                <reportElement x="138" y="30" width="279" height="17" uuid="61c1e556-c90d-4dec-a521-3339997de71d"/>
+                <reportElement x="138" y="26" width="279" height="17" uuid="61c1e556-c90d-4dec-a521-3339997de71d"/>
                 <textElement textAlignment="Center">
                     <font size="12"/>
                 </textElement>
@@ -146,11 +163,12 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
         </band>
     </title>
     <columnHeader>
-        <band height="20">
+        <band height="14">
             <staticText>
-                <reportElement x="11" y="0" width="100" height="19" uuid="8a922502-a37a-4908-9d08-f86e5ce1b64d">
+                <reportElement x="11" y="0" width="100" height="13" uuid="8a922502-a37a-4908-9d08-f86e5ce1b64d">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="c1df4704-955a-4c29-aaec-9d4e4ad2aac6"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textElement>
                     <font isBold="true"/>
@@ -158,7 +176,7 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
                 <text><![CDATA[Truck No.]]></text>
             </staticText>
             <staticText>
-                <reportElement x="121" y="0" width="100" height="19" uuid="09a357fa-1a54-450c-8e19-f59f9ef76ed4">
+                <reportElement x="121" y="0" width="100" height="13" uuid="09a357fa-1a54-450c-8e19-f59f9ef76ed4">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="5574887d-1e39-49de-b72e-c32c7ceac069"/>
                 </reportElement>
@@ -168,7 +186,7 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
                 <text><![CDATA[Invoice]]></text>
             </staticText>
             <staticText>
-                <reportElement x="231" y="0" width="100" height="19" uuid="31eb7ac6-28c7-4483-97c5-5953148ee00a">
+                <reportElement x="231" y="0" width="100" height="13" uuid="31eb7ac6-28c7-4483-97c5-5953148ee00a">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="c1e493f2-7131-4724-a9bc-26121d9cf860"/>
                 </reportElement>
@@ -178,7 +196,7 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
                 <text><![CDATA[Volume (K/L)]]></text>
             </staticText>
             <staticText>
-                <reportElement x="341" y="0" width="100" height="19" uuid="0e7affaf-c234-4112-a008-dc744546d225">
+                <reportElement x="341" y="0" width="100" height="13" uuid="0e7affaf-c234-4112-a008-dc744546d225">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
                 </reportElement>
@@ -188,7 +206,7 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
                 <text><![CDATA[Rate]]></text>
             </staticText>
             <staticText>
-                <reportElement x="451" y="0" width="100" height="19" uuid="65f1161f-5fb5-48d5-8c32-462c2fc5a261">
+                <reportElement x="451" y="0" width="100" height="13" uuid="65f1161f-5fb5-48d5-8c32-462c2fc5a261">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
                 </reportElement>
@@ -198,47 +216,52 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
                 <text><![CDATA[Amount]]></text>
             </staticText>
             <line>
-                <reportElement x="11" y="19" width="540" height="1" uuid="76bb8711-d5b9-4fee-ac60-1011684fda4c"/>
+                <reportElement x="11" y="13" width="540" height="1" uuid="76bb8711-d5b9-4fee-ac60-1011684fda4c"/>
             </line>
         </band>
     </columnHeader>
     <detail>
-        <band height="19" splitType="Stretch">
+        <band height="17" splitType="Stretch">
             <textField>
-                <reportElement isPrintRepeatedValues="false" x="11" y="4" width="100" height="15"
+                <reportElement isPrintRepeatedValues="false" x="11" y="4" width="100" height="13"
                                isPrintInFirstWholeBand="true" uuid="cc1d0936-345c-42d8-93ca-f95ae83f7e32">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="c1df4704-955a-4c29-aaec-9d4e4ad2aac6"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textFieldExpression><![CDATA[$F{TRUCK_NO}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="121" y="4" width="100" height="15" uuid="9ad66576-516a-4f2a-aaaf-bc46be742bbc">
+                <reportElement x="121" y="4" width="100" height="13" uuid="9ad66576-516a-4f2a-aaaf-bc46be742bbc">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="5574887d-1e39-49de-b72e-c32c7ceac069"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textFieldExpression><![CDATA[$F{INVOICE}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="231" y="4" width="100" height="15" uuid="f648914f-e0de-4556-acf1-fde13b453d05">
+                <reportElement x="231" y="4" width="100" height="13" uuid="f648914f-e0de-4556-acf1-fde13b453d05">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="c1e493f2-7131-4724-a9bc-26121d9cf860"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{VOLUME}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="341" y="4" width="100" height="15" uuid="2d66d04f-0419-48e4-b099-2e561dee9747">
+                <reportElement x="341" y="4" width="100" height="13" uuid="2d66d04f-0419-48e4-b099-2e561dee9747">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{RATE}]]></textFieldExpression>
             </textField>
             <textField pattern="#,##0.00#;(#,##0.00#)">
-                <reportElement x="451" y="4" width="100" height="15" uuid="4232947a-1360-46db-a915-f3762fd2372f">
+                <reportElement x="451" y="4" width="100" height="13" uuid="4232947a-1360-46db-a915-f3762fd2372f">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="453deab6-dc23-4099-a522-00bbdb89a09a"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$V{HAULING_AMOUNT}]]></textFieldExpression>
@@ -246,23 +269,23 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
         </band>
     </detail>
     <pageFooter>
-        <band height="48">
+        <band height="32">
             <textField>
-                <reportElement x="180" y="9" width="100" height="30" uuid="cfe0278f-ce13-47cf-b918-b2a525e77e2f"/>
+                <reportElement x="180" y="2" width="100" height="30" uuid="cfe0278f-ce13-47cf-b918-b2a525e77e2f"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
             </textField>
             <textField evaluationTime="Report">
-                <reportElement x="280" y="9" width="100" height="30" uuid="4a060ba4-6b7a-4193-b209-286cc0002c93"/>
+                <reportElement x="280" y="2" width="100" height="30" uuid="4a060ba4-6b7a-4193-b209-286cc0002c93"/>
                 <textElement textAlignment="Left"/>
                 <textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
             </textField>
         </band>
     </pageFooter>
     <summary>
-        <band height="42" splitType="Stretch">
-            <textField pattern="#,##0.00#;(#,##0.00#)">
-                <reportElement x="451" y="11" width="100" height="20" uuid="2498d3a3-e2a5-4f36-8f7f-90643d6a9f54">
+        <band height="22" splitType="Stretch">
+            <textField pattern="#,##0.00#;(#,##0.00#)" isBlankWhenNull="true">
+                <reportElement x="451" y="2" width="100" height="20" uuid="2498d3a3-e2a5-4f36-8f7f-90643d6a9f54">
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textElement textAlignment="Right">
@@ -271,7 +294,7 @@ ORDER BY L.AREA, COMM.TRUCK_NO]]>
                 <textFieldExpression><![CDATA[$V{GRAND_TOTAL_AMOUNT}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="11" y="11" width="100" height="19" uuid="fd4e1538-2a16-47ff-ab61-026d1acc3e25">
+                <reportElement x="11" y="2" width="100" height="19" uuid="fd4e1538-2a16-47ff-ab61-026d1acc3e25">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="c1df4704-955a-4c29-aaec-9d4e4ad2aac6"/>
                 </reportElement>

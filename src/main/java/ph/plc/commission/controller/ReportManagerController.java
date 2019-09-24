@@ -3,7 +3,6 @@ package ph.plc.commission.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;

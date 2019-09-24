@@ -47,7 +47,7 @@ public class ReportManager {
     public void generateReport(REPORT report, Map parameters) throws JRException, ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
         Connection connection =
-                DriverManager.getConnection("jdbc:log4jdbc:h2:file:./data/commission;AUTO_SERVER=TRUE;TRACE_LEVEL_FILE=4");
+                DriverManager.getConnection("jdbc:h2:file:./data/commission;AUTO_SERVER=TRUE");
 
         JasperReport jasperReport = JasperCompileManager.compileReport(
                 getClass().getResourceAsStream(report.getReportTemplate()));

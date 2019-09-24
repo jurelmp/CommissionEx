@@ -21,7 +21,7 @@ public class Main {
         try {
             Server.createTcpServer("-tcpAllowOthers").start();
             Class.forName("org.h2.Driver");
-            DriverManager.getConnection("jdbc:log4jdbc:h2:file:./data/commission;AUTO_SERVER=TRUE;TRACE_LEVEL_FILE=4");
+            DriverManager.getConnection("jdbc:h2:file:./data/commission;AUTO_SERVER=TRUE;TRACE_LEVEL_FILE=4");
             final Server webServer = Server.createWebServer();
             webServer.start();
         } catch (Exception e) {

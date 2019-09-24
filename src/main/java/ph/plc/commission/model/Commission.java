@@ -38,7 +38,7 @@ public class Commission implements GUIRepresentable {
         this.mId.set(id);
     }
 
-    @Column(name = "invoice", nullable = false)
+    @Column(name = "invoice", nullable = false, unique = true)
     public String getInvoice() {
         return mInvoice.get();
     }
