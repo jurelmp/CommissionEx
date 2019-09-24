@@ -66,7 +66,6 @@ public class EmployeeListController {
     @FXML
     private void initialize() {
         mEmployeeObservableList = FXCollections.observableArrayList();
-        btnAddCommission.setVisible(false);
         contextMenuInit();
         isEditMode = false;
         setupBindings();

@@ -132,7 +132,6 @@ public class CommissionEditorController {
         textFieldVolume.setTextFormatter(Helper.generateIntegerTextFormatter());
         textFieldPumping.setTextFormatter(Helper.generateIntegerTextFormatter());
         textFieldSuction.setTextFormatter(Helper.generateIntegerTextFormatter());
-        comboBoxEmployee.setDisable(true);
     }
 
     private void setupListeners() {
