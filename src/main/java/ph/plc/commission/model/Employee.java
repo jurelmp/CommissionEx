@@ -15,8 +15,8 @@ public class Employee implements GUIRepresentable, Serializable {
     private final StringProperty mFirstName = new SimpleStringProperty(this, "firstName");
     private final StringProperty mMiddleInitial = new SimpleStringProperty(this, "middleInitial");
     private final StringProperty mLastName = new SimpleStringProperty(this, "lastName");
-    private final ObjectProperty<Set<Additional>> mAdditionals = new SimpleObjectProperty<>(this, "additionals");
-    private final ObjectProperty<Set<Allowance>> mAllowances = new SimpleObjectProperty<>(this, "allowances");
+    private final ObjectProperty<Additional> mAdditional = new SimpleObjectProperty<>(this, "additional");
+    private final ObjectProperty<Allowance> mAllowance = new SimpleObjectProperty<>(this, "allowance");
     private final ObjectProperty<Set<Commission>> mCommissions = new SimpleObjectProperty<>(this, "commissions");
 
     public Employee() {
@@ -89,30 +89,30 @@ public class Employee implements GUIRepresentable, Serializable {
         this.mLastName.set(lastName);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<Additional> getAdditionals() {
-        return mAdditionals.get();
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+    public Additional getAdditional() {
+        return mAdditional.get();
     }
 
-    public ObjectProperty<Set<Additional>> additionalsProperty() {
-        return mAdditionals;
+    public ObjectProperty<Additional> additionalProperty() {
+        return mAdditional;
     }
 
-    public void setAdditionals(Set<Additional> additionals) {
-        this.mAdditionals.set(additionals);
+    public void setAdditional(Additional additional) {
+        this.mAdditional.set(additional);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<Allowance> getAllowances() {
-        return mAllowances.get();
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+    public Allowance getAllowance() {
+        return mAllowance.get();
     }
 
-    public ObjectProperty<Set<Allowance>> allowancesProperty() {
-        return mAllowances;
+    public ObjectProperty<Allowance> allowanceProperty() {
+        return mAllowance;
     }
 
-    public void setAllowances(Set<Allowance> allowances) {
-        this.mAllowances.set(allowances);
+    public void setAllowance(Allowance allowance) {
+        this.mAllowance.set(allowance);
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)

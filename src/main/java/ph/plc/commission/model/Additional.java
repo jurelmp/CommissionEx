@@ -19,7 +19,7 @@ public class Additional implements GUIRepresentable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id")
     public int getId() {
         return mId.get();
     }
@@ -72,8 +72,8 @@ public class Additional implements GUIRepresentable {
         this.mAmount.set(amount);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     public Employee getEmployee() {
         return mEmployee.get();
     }

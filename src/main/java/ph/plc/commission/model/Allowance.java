@@ -20,7 +20,7 @@ public class Allowance implements GUIRepresentable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id")
     public int getId() {
         return mId.get();
     }
@@ -86,8 +86,8 @@ public class Allowance implements GUIRepresentable {
         this.mRate.set(rate);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     public Employee getEmployee() {
         return mEmployee.get();
     }

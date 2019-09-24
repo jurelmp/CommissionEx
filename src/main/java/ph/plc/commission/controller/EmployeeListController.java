@@ -78,17 +78,19 @@ public class EmployeeListController {
         mMenuItemEdit = new MenuItem("Edit");
         mMenuItemCommissionList = new MenuItem("View Commissions");
         mMenuItemAddCommission = new MenuItem("Add Commission");
-        mContextMenu.getItems().addAll(mMenuItemEdit, mMenuItemAddCommission, mMenuItemCommissionList);
+        mContextMenu.getItems().addAll(mMenuItemEdit, mMenuItemCommissionList);
     }
 
     private void setupBindings() {
         colId.setCellValueFactory(param -> param.getValue().codeProperty());
         colLastName.setCellValueFactory(param -> param.getValue().lastNameProperty());
+        colLastName.setSortType(TableColumn.SortType.ASCENDING);
         colFirstName.setCellValueFactory(param -> param.getValue().firstNameProperty());
         colMiddleInitial.setCellValueFactory(param -> param.getValue().middleInitialProperty());
 
         mEmployeeObservableList.addAll(mEmployeeService.getAll());
         tableViewEmployee.setItems(mEmployeeObservableList);
+        tableViewEmployee.getSortOrder().add(colLastName);
 
         TableFilter.forTableView(tableViewEmployee).lazy(true).apply();
     }

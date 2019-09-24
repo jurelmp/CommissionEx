@@ -41,7 +41,7 @@ public class Helper {
     }
 
     public static LocalDate toLocalDate(Date date) {
-        return new java.sql.Date(new Date().getTime()).toLocalDate();
+        return new java.sql.Date(date.getTime()).toLocalDate();
     }
 
     public static TextFormatter<Double> generateDoubleTextFormatter() {
